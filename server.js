@@ -2,8 +2,8 @@ var express = require( 'express' );
 
 var app = express();
 
-var names = {
-  names: [
+var data = {
+  persons: [
     "Josh",
     "Steve",
     "Sally",
@@ -22,13 +22,13 @@ app.get( '/', function ( req, res ) {
   res.send( "Hello, world!" );
 });
 
-app.get( '/names', ( req, res ) => {
-  res.json( names );
+app.get( '/persons', ( req, res ) => {
+  res.json( data );
 });
 
-app.get( '/names/:name', function ( req, res ) {
+app.get( '/persons/:name', function ( req, res ) {
   var name = req.params.name;
-  var record = names.names.find( o => o.name === name );
+  var record = data.persons.find( person => person.name === name );
 
   if ( ! record ) {
     res.status( 404 ).json({ error: 404, message: "name not found" })
@@ -37,8 +37,8 @@ app.get( '/names/:name', function ( req, res ) {
   }
 })
 
-app.delete( '/names/:name', function ( req, res ) {
-  names.names = names.names.filter( o => o.name !== req.params.name );
+app.delete( '/persons/:name', function ( req, res ) {
+  data.persons = data.persons.filter( person => person.name !== req.params.name );
 
   res.json({ message: 'deleted!' });
 })
